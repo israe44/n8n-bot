@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Do or Due</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* No scrolling */
+      display: flex;
+      flex-direction: column;
+      background: #4d4848;
+      color: #fff;
+    background-image: url("https://images.unsplash.com/photo-1521790361543-f645cf042ec4");
+    background-size: cover;
+    background-position: center;
+      
+    }
+
+    nav {
+      width: 100%;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.55); /* darker so always visible */
+      backdrop-filter: blur(8px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000; /* Always above pictures */
+    }
+
+    nav h2 {
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    nav ul li:hover {
+      color: #ff4444;
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100vw;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 60px;
+      padding-right: 60px;
+      text-shadow: 0px 2px 6px rgba(0,0,0,0.7);
+      transition: background-image 0.8s ease-in-out;
+    }
+
+    .hero h1 {
+      font-size: 60px;
+      max-width: 600px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-top: 20px;
+      max-width: 600px;
+      opacity: 0.9;
+    }
+  .join-btn {
+      padding: 8px 18px;
+      border: 2px solid #ff4444;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .join-btn:hover {
+      background: #ff4444;
+      color: #000;
+    }
+  .join-button {
+      margin-top: 25px;
+      padding: 12px 28px;
+      font-size: 18px;
+      background: #ff4444;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      width: fit-content;
+    }
+
+    .join-button:hover {
+      background: #ff2222;
+      transform: scale(1.05);
+    }
+
+    /* Chatbot Styles */
+    .chatbot-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ff4444;
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chatbot-button:hover {
+      background: #ff2222;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+  </style>
+  <script>
+window.n8nChatSettings = {
+    webhookUrl: 'https://n8n.srv114142.hstgr.cloud/webhook/78268aa9-d0a3-4378-bde2-0b25574389a6/chat',
+    position: 'bottom-right',
+    theme: 'light', // or 'dark'
+    label: 'Chat with us',
+    size: 56,
+    openOnLoad: false
+};
+</script>
+</head>
+<body>
+
+  <nav>
+    <h2>Do or Due</h2>
+    <ul>
+      <li>Home</li>
+      <li>Rules</li>
+      <li>Team</li>
+      <li>Contact</li>
+      
+    </ul>
+  </nav>
+
+  <div class="hero" id="hero">
+    <h1>Complete Your Tasks. Or Face the Consequences.</h1>
+    <p>Every mission counts. Every week is a new challenge. Either you do it, or you deal with what comes next.</p>
+    <button class="join-button">Join Now</button>
+  </div>
+
+  <script>
+    const hero = document.getElementById("hero");
+
+    const images = [
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",  /* teamwork */
+      "https://images.unsplash.com/photo-1581091012184-5c1d7d1e80b2",  /* productivity */
+      "https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf",  /* planning */
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4",  /* working table */
+      "https://images.unsplash.com/photo-1506784365847-bbad939e9335",  /* strong atmosphere */
+      "https://images.unsplash.com/photo-1521790361543-f645cf042ec4"   /* motivation */
+    ];
+
+    let index = 0;
+
+    function changeBackground() {
+      hero.style.backgroundImage = `url(${images[index]})`;
+      index = (index + 1) % images.length;
+    }
+
+    changeBackground();
+    setInterval(changeBackground, 2500);
+  </script>
+
+<!-- Floating Chat Button -->
+<button class="chatbot-button" onclick="openChat()" title="Chat with us">
+  💬
+</button>
+
+<script>
+(function () {
+    const CHAT_URL = 'https://n8n.srv1141642.hstgr.cloud/webhook/78268aa9-d0a3-4378-bde2-0b25574389a6/chat';
+    const BUTTON_SELECTOR = '.chatbot-button';
+
+    // Make floating button slightly smaller to fit the page
+    const btn = document.querySelector(BUTTON_SELECTOR);
+    if (btn) {
+        btn.style.width = '44px';
+        btn.style.height = '44px';
+        btn.style.fontSize = '18px';
+        btn.style.bottom = '18px';
+        btn.style.right = '18px';
+    }
+
+    function createChatPanel() {
+        // Panel container
+        const panel = document.createElement('div');
+        panel.id = 'embedded-chat-panel';
+        Object.assign(panel.style, {
+            position: 'fixed',
+            right: '18px',
+            bottom: '72px',
+            width: '340px',
+            maxWidth: 'calc(100vw - 36px)',
+            height: '480px',
+            maxHeight: 'calc(100vh - 120px)',
+            borderRadius: '12px',
+            overflow: 'hidden',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+            background: '#fff',
+            zIndex: 2000,
+            display: 'flex',
+            flexDirection: 'column',
+            transform: 'translateY(10px)',
+            transition: 'opacity 180ms ease, transform 180ms ease',
+            opacity: '0'
+        });
+
+        // Header
+        const header = document.createElement('div');
+        header.textContent = 'Chat with us';
+        Object.assign(header.style, {
+            height: '44px',
+            padding: '8px 12px',
+            background: 'rgba(0,0,0,0.75)',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: '14px',
+            gap: '8px'
+        });
+
+        const controls = document.createElement('div');
+        controls.style.display = 'flex';
+        controls.style.gap = '8px';
+
+        const minimizeBtn = document.createElement('button');
+        minimizeBtn.innerHTML = '—';
+        Object.assign(minimizeBtn.style, {
+            background: 'transparent',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '16px',
+            lineHeight: '1'
+        });
+        minimizeBtn.title = 'Minimize';
+
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '✕';
+        Object.assign(closeBtn.style, {
+            background: 'transparent',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '14px',
+            lineHeight: '1'
+        });
+        closeBtn.title = 'Close';
+
+        controls.appendChild(minimizeBtn);
+        controls.appendChild(closeBtn);
+        header.appendChild(controls);
+
+        // Iframe
+        const iframe = document.createElement('iframe');
+        iframe.src = CHAT_URL;
+        iframe.title = 'Chat';
+        iframe.setAttribute('allow', 'camera; microphone; autoplay; encrypted-media;');
+        Object.assign(iframe.style, {
+            border: '0',
+            flex: '1 1 auto',
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            background: '#fff'
+        });
+
+        panel.appendChild(header);
+        panel.appendChild(iframe);
+        document.body.appendChild(panel);
+
+        // entrance animation
+        requestAnimationFrame(() => {
+            panel.style.opacity = '1';
+            panel.style.transform = 'translateY(0)';
+        });
+
+        let minimized = false;
+        minimizeBtn.addEventListener('click', () => {
+            if (!minimized) {
+                iframe.style.display = 'none';
+                panel.style.height = '44px';
+                minimized = true;
+                minimizeBtn.innerHTML = '+';
+            } else {
+                iframe.style.display = 'block';
+                panel.style.height = '';
+                minimized = false;
+                minimizeBtn.innerHTML = '—';
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            panel.style.opacity = '0';
+            panel.style.transform = 'translateY(8px)';
+            setTimeout(() => panel.remove(), 180);
+        });
+
+        return panel;
+    }
+
+    // Toggle panel
+    window.openChat = function openChat() {
+        const existing = document.getElementById('embedded-chat-panel');
+        if (existing) {
+            // if visible, close it
+            existing.style.opacity = '0';
+            existing.style.transform = 'translateY(8px)';
+            setTimeout(() => existing.remove(), 180);
+            return;
+        }
+        createChatPanel();
+    };
+})();
+</script>
+</body>
+</html>
+<style>
+    @media (max-width: 768px) {
+        nav {
+            padding: 12px 20px;
+        }
+
+        nav h2 {
+            font-size: 18px;
+        }
+
+        nav ul {
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .hero {
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+        }
+
+        .hero p {
+            font-size: 16px;
+        }
+
+        .join-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        nav h2 {
+            font-size: 16px;
+        }
+
+        nav ul {
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .hero {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            max-width: 100%;
+        }
+
+        .hero p {
+            font-size: 14px;
+            max-width: 100%;
+        }
+
+        .join-button {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .chatbot-button {
+            width: 44px;
+            height: 44px;
+            bottom: 16px;
+            right: 16px;
+        }
+    }
+</style>
